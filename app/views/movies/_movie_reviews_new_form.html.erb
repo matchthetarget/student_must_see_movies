@@ -1,0 +1,19 @@
+<%= form_with(model: @review, local: true) do |f| %>
+
+  <%= f.hidden_field :movie_id, value: @movie.id %>
+
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <div class="form-group">
+    <%= f.label :body %>
+    <%= f.text_area :body, rows: "3", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :rating %>
+
+    <%= f.text_field :rating, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Create review", class: "btn btn-block btn-outline-secondary" %>
+<% end %>
