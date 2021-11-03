@@ -4,6 +4,14 @@ class Api::V1::MoviesController < Api::V1::GraphitiController
     respond_with(movies)
   end
 
+  def options
+    movies = Movie.all
+    options = movies.map do |movie|
+      option = {label: movie.title, value: movie.id }
+    end
+    render json: options.to_json
+  end
+
   def show
     movie = MovieResource.find(params)
     respond_with(movie)

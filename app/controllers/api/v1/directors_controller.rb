@@ -4,6 +4,14 @@ class Api::V1::DirectorsController < Api::V1::GraphitiController
     respond_with(directors)
   end
 
+  def options
+    directors = Director.all
+    options = directors.map do |director|
+      option = {label: director.name, value: director.id }
+    end
+    render json: options.to_json
+  end
+
   def show
     director = DirectorResource.find(params)
     respond_with(director)

@@ -3,40 +3,78 @@
     <h1 class="display-4">
       Movies
 
-      <%= link_to new_movie_path, class: "btn btn-lg btn-outline-secondary" do %>
-        <i class="fas fa-plus fa-fw"></i>
-      <% end %>
     </h1>
+    <%= link_to new_movie_path, class: "" do %>
+      Add a new movie
+    <% end %>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12 mb-3">
-    <%= render partial: "movies/movies_search_form" %>
-  </div>
-</div>
 
+<table class="table">
+  <tr>
+    <th>
 
+    </th>
 
+    <th>
+      Title
+    </th>
 
-<div class="row justify-content-center mb-3">
-  <div class="col-md-8">
-    <div class="card">
-      <h1 class="card-header h4 d-flex align-items-center justify-content-between">
-        Movies
+    <th>
+      Year
+    </th>
 
-        <%= link_to new_movie_path, class: "btn btn-sm btn-outline-secondary" do %>
-          <i class="fas fa-plus fa-fw"></i>
-        <% end %>
-      </h1>
+    <th>
+      Duration
+    </th>
 
-      <div class="list-group list-group-flush">
-        <%= render collection: @movies, partial: "list_item", as: :movie %>
-      </div>
-      <div class="card-footer d-flex justify-content-center">
-        <%= paginate @movies, theme: 'twitter-bootstrap-4' %>
-      </div>
+    <th>
+      Description
+    </th>
 
-    </div>
-  </div>
+    <th>
+      Director
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @movies.each do |movie| %>
+  <tr>
+    <td>
+      <img src="<%= movie.image %>" width="80">
+    </td>
+
+    <td>
+      <%= movie.title %>
+    </td>
+
+    <td>
+      <%= movie.year %>
+    </td>
+
+    <td>
+      <%= movie.duration %> minutes
+    </td>
+
+    <td>
+      <%= movie.description %>
+    </td>
+
+    <td>
+      <%= link_to movie.director.name, "/directors/#{movie.director.id}" %>
+    </td>
+
+    <td>
+      <a href="/movies/<%= movie.id %>" class="btn btn-primary">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<div class="card-footer d-flex justify-content-center">
+  <%= paginate @movies, theme: 'twitter-bootstrap-4' %>
 </div>

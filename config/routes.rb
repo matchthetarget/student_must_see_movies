@@ -12,8 +12,10 @@ Rails.application.routes.draw do
 
       resources :actors
 
+      get "directors_options" => "directors#options" 
       resources :directors
-
+      
+      get "movies_options" => "movies#options" 
       resources :movies
     end
     mount VandalUi::Engine, at: "/vandal"

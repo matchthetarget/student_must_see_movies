@@ -1,35 +1,32 @@
 <div class="row mb-3">
   <div class="col-md-12">
     <h1 class="display-4">
-      Bookmarks
-
-      <%= link_to new_bookmark_path, class: "btn btn-lg btn-outline-secondary" do %>
-        <i class="fas fa-plus fa-fw"></i>
-      <% end %>
+      My Bookmarks
     </h1>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12 mb-3">
-    <%= render partial: "bookmarks/bookmarks_search_form" %>
+<div class="row mb-5">
+  <div class="col-md-8">
+    <%= form_with(model: current_user.bookmarks.new, local: true) do |f| %>
+
+      <div class="form-group">
+        <%= f.label :movie_id %>
+
+        <%= f.collection_select :movie_id, Movie.where.not(id: current_user.bookmarked_movies.ids), :id, :to_s, {}, class: "form-control" %>
+      </div>
+
+      <%= f.hidden_field :bookmarker_id, value: current_user.id %>
+
+      <%= f.submit "Bookmark this movie!", class: "btn btn-block btn-outline-secondary" %>
+    <% end %>
+
   </div>
 </div>
-
-
-
 
 <div class="row justify-content-center mb-3">
   <div class="col-md-8">
     <div class="card">
-      <h1 class="card-header h4 d-flex align-items-center justify-content-between">
-        Bookmarks
-
-        <%= link_to new_bookmark_path, class: "btn btn-sm btn-outline-secondary" do %>
-          <i class="fas fa-plus fa-fw"></i>
-        <% end %>
-      </h1>
-
       <div class="list-group list-group-flush">
         <%= render collection: @bookmarks, partial: "list_item", as: :bookmark %>
       </div>
@@ -38,5 +35,25 @@
       </div>
 
     </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        Other movies you might like:
+      </div>
+      <ul class="list-group list-group-flush">
+        <% current_user.recommended_movies.first(3).each do |movie| %>
+          <li class="list-group-item">
+            <%= link_to movie, movie %>
+          </li>
+        <% end %>
+        <% if current_user.recommended_movies.empty? %>
+          <li class="list-group-item">
+            Try bookmarking some more movies first!
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
   </div>
 </div>

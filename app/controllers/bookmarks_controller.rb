@@ -2,9 +2,9 @@ class BookmarksController < ApplicationController
   before_action :set_bookmark, only: %i[show edit update destroy]
 
   def index
-    @q = Bookmark.ransack(params[:q])
+    @q = current_user.bookmarks.ransack(params[:q])
     @bookmarks = @q.result(distinct: true).includes(:movie,
-                                                    :user).page(params[:page]).per(10)
+                                                    :bookmarker).page(params[:page]).per(10)
   end
 
   def show; end
@@ -23,7 +23,7 @@ class BookmarksController < ApplicationController
       if Rails.application.routes.recognize_path(request.referer)[:controller] != Rails.application.routes.recognize_path(request.path)[:controller]
         redirect_back fallback_location: request.referer, notice: message
       else
-        redirect_to @bookmark, notice: message
+        redirect_back fallback_location: request.referer, notice: message
       end
     else
       render :new
@@ -55,6 +55,6 @@ class BookmarksController < ApplicationController
   end
 
   def bookmark_params
-    params.require(:bookmark).permit(:movie_id, :user_id)
+    params.require(:bookmark).permit(:movie_id, :bookmarker_id)
   end
 end

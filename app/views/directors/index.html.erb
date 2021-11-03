@@ -1,42 +1,67 @@
-<div class="row mb-3">
-  <div class="col-md-12">
-    <h1 class="display-4">
-      Directors
+<h1>
+  All directors
+</h1>
 
-      <%= link_to new_director_path, class: "btn btn-lg btn-outline-secondary" do %>
-        <i class="fas fa-plus fa-fw"></i>
-      <% end %>
-    </h1>
-  </div>
-</div>
+<a href="/directors/new">
+  Add a new director
+</a>
 
-<div class="row">
-  <div class="col-md-12 mb-3">
-    <%= render partial: "directors/directors_search_form" %>
-  </div>
-</div>
+<hr>
+
+<table class="table">
+  <tr>
+
+    <th>
+      Image
+    </th>
+
+    <th>
+      Dob
+    </th>
+
+    <th>
+      Name
+    </th>
+
+    <th>
+      Bio
+    </th>
 
 
 
+    <th>
+    </th>
+  </tr>
 
-<div class="row justify-content-center mb-3">
-  <div class="col-md-8">
-    <div class="card">
-      <h1 class="card-header h4 d-flex align-items-center justify-content-between">
-        Directors
+  <% @directors.each do |director| %>
+  <tr>
+    <td>
+      <img src="<%= director.image %>" width="80">
+    </td>
 
-        <%= link_to new_director_path, class: "btn btn-sm btn-outline-secondary" do %>
-          <i class="fas fa-plus fa-fw"></i>
-        <% end %>
-      </h1>
+    <td>
+      <%= director.dob %>
+    </td>
 
-      <div class="list-group list-group-flush">
-        <%= render collection: @directors, partial: "list_item", as: :director %>
-      </div>
-      <div class="card-footer d-flex justify-content-center">
-        <%= paginate @directors, theme: 'twitter-bootstrap-4' %>
-      </div>
+    <td>
+      <%= director.name %>
+    </td>
 
-    </div>
-  </div>
+    <td>
+      <%= truncate(director.bio) %>
+    </td>
+
+
+
+    <td>
+      <a href="/directors/<%= director.id %>" class="btn btn-primary">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<div class="card-footer d-flex justify-content-center">
+  <%= paginate @directors, theme: 'twitter-bootstrap-4' %>
 </div>

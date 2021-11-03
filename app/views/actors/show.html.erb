@@ -1,17 +1,97 @@
-<div class="row justify-content-center mb-3">
-  <div class="col-md-8">
-    <%= render object: @actor, partial: "card", as: :actor %>
-  </div>
-</div>
+<h1>
+  Actor #<%= @actor.id %> details
+</h1>
 
-<div class="row justify-content-center mb-3">
-  <div class="col-md-8">
-    <%= render partial: "actors/actor_roles" %>
-  </div>
-</div>
+<a href="/actors/<%= @actor.id %>/edit">
+  Edit actor
+</a>
 
-<div class="row justify-content-center mb-3">
-  <div class="col-md-8">
-    <%= render partial: "actors/actor_filmography" %>
+<hr>
+
+<dl>
+  <dt>
+    Dob
+  </dt>
+  <dd>
+    <%= @actor.dob %>
+  </dd>
+
+  <dt>
+    Name
+  </dt>
+  <dd>
+    <%= @actor.name %>
+  </dd>
+
+  <dt>
+    Bio
+  </dt>
+  <dd>
+    <%= @actor.bio %>
+  </dd>
+
+  <dt>
+    Image
+  </dt>
+  <dd>
+    <img src="<%= @actor.image %>" width="320">
+  </dd>
+
+  <dt>
+    Number of films
+  </dt>
+  <dd>
+    <%= @actor.filmography.count %>
+  </dd>
+
+</dl>
+
+<%= link_to @actor, method: :delete, data: { confirm: "Do you really want to delete this actor?" }, class: "btn btn-danger" do %>
+  Delete actor
+<% end %>
+
+<hr>
+
+<a href="/actors">
+  Go back
+</a>
+
+<div class="card mt-3 mb-5">
+  <div class="card-header">
+    Filmography
   </div>
+  <ul class="list-group">
+    <% @actor.roles.each do |character| %>
+      <li class="list-group-item">
+        <a href="/movies/<%= character.movie_id %>"><%= character.movie.title %></a>
+        (<%= character.name %>)
+      </li>
+    <% end %>
+  </ul>
+  <div class="card-header">
+    Add a new character for this actor
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+    <%= form_with(model: @actor.roles.new, local: true) do |f| %>
+
+      <div class="form-group">
+        <%= f.label :movie_id %>
+
+        <%= f.collection_select :movie_id, Movie.all, :id, :to_s, {}, class: "form-control" %>
+      </div>
+
+      <%= f.hidden_field :actor_id, value: @actor.id %>
+
+      <div class="form-group">
+        <%= f.label :name %>
+
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+
+      <%= f.submit "Create character", class: "btn btn-block btn-outline-secondary" %>
+    <% end %>
+
+    </li>
+  </ul>
 </div>

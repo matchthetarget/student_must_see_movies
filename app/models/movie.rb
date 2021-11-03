@@ -26,7 +26,7 @@ class Movie < ApplicationRecord
 
   has_many   :bookmarkers,
              through: :bookmarks,
-             source: :user
+             source: :bookmarker
 
   # Validations
 

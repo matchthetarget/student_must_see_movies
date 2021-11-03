@@ -5,14 +5,14 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
 
   <div class="form-group">
-    <%= f.label :body %>
-    <%= f.text_area :body, rows: "3", class: "form-control" %>
+    <%= f.label :body, "Your review" %>
+    <%= f.text_area :body, rows: "3", class: "form-control", placeholder: "Write your review here!" %>
   </div>
 
   <div class="form-group">
     <%= f.label :rating %>
 
-    <%= f.text_field :rating, class: "form-control" %>
+    <%= f.number_field :rating, class: "form-control", in: 0..5 %>
   </div>
 
   <%= f.submit "Create review", class: "btn btn-block btn-outline-secondary" %>
