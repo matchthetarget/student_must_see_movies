@@ -1,25 +1,13 @@
 <div class="card mb-3">
   <h2 class="card-header h4">
-    Movie #<%= movie.id %>
+    <%= movie.title %>
   </h2>
-
+  <div class="d-flex justify-content-center">
+    <img src="<%= movie.image %>" class="card-img-top" style="max-width: 50%" alt="movie poster">
+  </div>
   <div class="card-body">
+    <p><%= movie.description %></p>
     <dl class="mb-1">
-      <dt>Title</dt>
-      <dd><%= movie.title %></dd>
-
-      <dt>Year</dt>
-      <dd><%= movie.year %></dd>
-
-      <dt>Duration</dt>
-      <dd><%= movie.duration %></dd>
-
-      <dt>Description</dt>
-      <dd><%= movie.description %></dd>
-
-      <dt>Image</dt>
-      <dd><%= movie.image %></dd>
-
       <dt>Director</dt>
       <dd>
         <% if @movie.director.present? %>
@@ -27,13 +15,18 @@
         <% end %>
       </dd>
 
+
+      <dt>Year</dt>
+      <dd><%= movie.year %></dd>
+
+      <dt>Duration</dt>
+      <dd><%= movie.duration %> minutes</dd>
+
     </dl>
-
+    <hr>
+    <p>This movie has been bookmarked by <%= movie.bookmarkers.pluck(:username).to_sentence %></p>
+    <p>This movie has been reviewed <%= movie.reviewers.pluck(:username).to_sentence %></p>
     <div class="row">
-      <div class="col">
-        <%= link_to_show_or_back movie, '<i class="fas fa-search-plus"></i>'.html_safe, '<i class="fas fa-chevron-left"></i>'.html_safe, class: "btn btn-block btn-outline-secondary" %>
-      </div>
-
       <div class="col">
         <%= link_to edit_movie_url(movie), class: "btn btn-block btn-outline-secondary" do %>
           <i class="fas fa-edit"></i>
@@ -44,6 +37,23 @@
         <%= link_to movie, method: :delete, data: { confirm: "Do you really want to delete this movie?" }, class: "btn btn-block btn-outline-secondary" do %>
           <i class="fas fa-trash-alt"></i>
         <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mt-3">
+      <% if Bookmark.find_by(user: current_user, movie: movie).present?%>
+        <%= link_to Bookmark.find_by(user: current_user, movie: movie), method: :delete, data: { confirm: "Do you really want to remove this bookmark?" }, class: "btn btn-block btn-outline-danger" do %>
+          Remove movie from bookmarks
+        <% end %>
+      <% else %>
+        <%= form_with(model: current_user.bookmarks.new, local: true, novalidate: true, class: "mb-3") do |f| %>
+
+          <%= f.hidden_field :movie_id, value: movie.id %>
+
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <%= f.button "Bookmark this movie!", class: "btn btn-primary btn-block" %>
+        <% end %>
+      <% end%>
       </div>
     </div>
   </div>

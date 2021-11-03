@@ -2,7 +2,7 @@ class BookmarksController < ApplicationController
   before_action :set_bookmark, only: %i[show edit update destroy]
 
   def index
-    @q = Bookmark.ransack(params[:q])
+    @q = current_user.bookmarks.ransack(params[:q])
     @bookmarks = @q.result(distinct: true).includes(:movie,
                                                     :user).page(params[:page]).per(10)
   end

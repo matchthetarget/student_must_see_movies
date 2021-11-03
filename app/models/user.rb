@@ -27,7 +27,7 @@ class User < ApplicationRecord
   # Scopes
 
   def to_s
-    email
+    username
   end
 
   # Include default devise modules. Others available are:

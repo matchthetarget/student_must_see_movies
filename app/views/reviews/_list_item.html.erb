@@ -1,7 +1,18 @@
-<%= link_to review, class: "list-group-item list-group-item-action d-flex align-items-center justify-content-between" do %>
+<%= link_to review.movie, class: "list-group-item list-group-item-action d-flex align-items-center justify-content-between" do %>
   <div>
-    <%= review %>
+    <div class="d-flex">
+      <% review.rating.times do %>
+        <i class="fas fa-star"></i>
+      <% end %>
+      <% (5 - review.rating).times do %>
+        <i class="far fa-star"></i>
+      <% end %>
+    </div>
+    <%= review.body.truncate(50) %>
+
+    <br>
     <small class="text-muted">
+      written for <strong><%= review.movie.title %></strong>
       <%= time_ago_in_words(review.updated_at) %> ago
     </small>
   </div>

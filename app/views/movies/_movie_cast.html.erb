@@ -6,9 +6,12 @@
   <ul class="list-group list-group-flush">
     <% @movie.cast.each do |actor| %>
       <li class="list-group-item d-flex align-items-center justify-content-between">
-        <a href="/actors/<%= actor.id %>">
-          <%= actor %>
-        </a>
+        <div>
+          <a href="/actors/<%= actor.id %>">
+            <%= actor %>
+          </a>
+        </div>
+        <span class="text-muted"><%= Character.find_by(actor: actor, movie: @movie).name %></span>
 
       </li>
     <% end %>

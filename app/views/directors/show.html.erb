@@ -1,11 +1,115 @@
-<div class="row justify-content-center mb-3">
-  <div class="col-md-8">
-    <%= render object: @director, partial: "card", as: :director %>
-  </div>
-</div>
+<h1>
+  Director #<%= @director.id %> details
+</h1>
 
-<div class="row justify-content-center mb-3">
-  <div class="col-md-8">
-    <%= render partial: "directors/director_filmography" %>
+<a href="/directors/<%= @director.id %>/edit">
+  Edit director
+</a>
+
+<hr>
+
+<dl>
+  <dt>
+    Dob
+  </dt>
+  <dd>
+    <%= @director.dob %>
+  </dd>
+
+  <dt>
+    Name
+  </dt>
+  <dd>
+    <%= @director.name %>
+  </dd>
+
+  <dt>
+    Bio
+  </dt>
+  <dd>
+    <%= truncate(@director.bio, length: 200) %>
+  </dd>
+
+  <dt>
+    Image
+  </dt>
+  <dd>
+    <img src="<%= @director.image %>" width="320">
+  </dd>
+
+  <dt>
+    Number of films
+  </dt>
+  <dd>
+    <%= @director.filmography.count %>
+  </dd>
+
+</dl>
+
+<a href="/delete_director/<%= @director.id %>" class="btn btn-danger">
+  Delete director
+</a>
+
+<hr>
+
+<a href="/directors">
+  Go back
+</a>
+
+
+<div class="card mt-3 mb-5">
+  <div class="card-header">
+    Filmography
   </div>
+  <ul class="list-group">
+    <% @director.filmography.each do |movie| %>
+      <li class="list-group-item">
+        <a href="/movies/<%= movie.id %>"><%= movie.title %></a>
+        (<%= movie.year %>)
+      </li>
+    <% end %>
+  </ul>
+  <div class="card-header">
+    Add a new movie for this director
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <%= form_with(model: @movie, local: true) do |f| %>
+
+        <div class="form-group">
+          <%= f.label :title %>
+
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :year %>
+
+          <%= f.text_field :year, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :duration %>
+
+          <%= f.text_field :duration, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, rows: "3", class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :image %>
+
+          <%= f.text_field :image, class: "form-control" %>
+        </div>
+
+        <%= f.hidden_field :director_id, value: @director.id %>
+
+        <%= f.submit "Create movie", class: "btn btn-block btn-outline-secondary" %>
+      <% end %>
+
+    </li>
+  </ul>
 </div>
