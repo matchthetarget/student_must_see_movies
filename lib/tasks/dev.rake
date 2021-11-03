@@ -6,7 +6,7 @@ task({ :review_data => :environment}) do
     "This movie even in 2021 has alot to bring to the table. The director did an amazing job. The villain is what makes this movie as good as it is.",
     "What a true game-changer for movies at its time. The action was thrilling and made is guaranteed to keep you on the edge of your chair though out the whole movie. True a great movie that paved the way for future movies.",
     "One of the best movies ever. Acting is fantastic, special effects are excellent and the movie has no wasted time.",
-    "The SCENES, the SOUNDS, the ...smells??? I felt like I was having a 5D experience watching this. Definitely watch with friends."
+    "The SCENES, the SOUNDS, the ...smells??? I felt like I was having a 5D experience watching this. Definitely watch with friends.",
     "This is probably my favorite movie, simply everything in it cooperates to deliver a great story, although the screenplay is its strongest part",
     "Do I need to explain myself?",
     "So much this movie does right. From the fast paced and slightly complex plot to the characters seen, it's just incredible.",
@@ -34,7 +34,7 @@ task({ :review_data => :environment}) do
     "Too many subplots and distractions make for a boring mishmash of otherwise interesting premises. Most of the cast tries their best - but it’s too scattershot to mean much.",
     "I thought it was pretty good. I enjoyed it.",
     "It's not a masterpiece by any means, but it's easy to watch and that's all that I was really looking for.",
-    "Decent adaption to the screen. The director took a few creative liberties that I didn't agree with but it didn't ruin anything for me."
+    "Decent adaption to the screen. The director took a few creative liberties that I didn't agree with but it didn't ruin anything for me.",
     "So hyped for the destruction of humanity."
   ]
 
