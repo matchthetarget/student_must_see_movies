@@ -23,7 +23,7 @@ class BookmarksController < ApplicationController
       if Rails.application.routes.recognize_path(request.referer)[:controller] != Rails.application.routes.recognize_path(request.path)[:controller]
         redirect_back fallback_location: request.referer, notice: message
       else
-        redirect_to @bookmark, notice: message
+        redirect_back fallback_location: request.referer, notice: message
       end
     else
       render :new
