@@ -13,4 +13,14 @@ class DirectorResource < ApplicationResource
              resource: MovieResource
 
   # Indirect associations
+
+  # Custom Filter to allow nil in dob column
+  filter :dob, :allow_nil => true  do
+    eq do |scope, value|
+      scope.where(:dob => value)
+    end
+    not_eq do |scope, value|
+      scope.where.not(:dob => value)
+    end
+  end
 end
